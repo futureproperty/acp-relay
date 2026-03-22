@@ -27,3 +27,9 @@
 - Keep backend process launch config on `proxy.Config` and use `NewSessionRequest.Cwd` as `ExecOptions.Dir` for spawned agents.
 - Track remote `ClientSideConnection` instances in a bridge-local `map[sessionId]*ClientSideConnection` and let session manager own process lifecycle metadata.
 - Stub unsupported client callbacks with `acp.NewMethodNotFound(...)` instead of adding partial filesystem/terminal implementations.
+
+## [2026-03-23] Transport routing and streaming
+
+- Keep transport on plain HTTP + SSE only; do not add WebSocket, TLS, or CORS behavior in this package.
+- Use a single session route prefix (`/acp/sessions/`) with manual path splitting so approve/deny stay compatible with Go 1.21 `http.ServeMux`.
+- Keep HTTP request handling pluggable through `MessageHandler`/`PermissionHandler`, and serialize bridge-backed JSON-RPC requests with `PipeMessageHandler` mutex protection.

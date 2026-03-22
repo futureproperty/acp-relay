@@ -38,3 +38,9 @@
 - Bridge-to-agent client capabilities should stay minimal (`fs` disabled, `terminal` disabled) because non-forwarded client methods intentionally return `MethodNotFound`.
 - `Authenticate` has no session ID in ACP, so the bridge currently forwards it only when exactly one remote session is active; session-scoped methods (`Prompt`, `Cancel`, `SetSessionMode`) resolve by `sessionId`.
 - Session cleanup is safest when driven by the provider `Wait()` goroutine: remove the stored connection and close the session manager entry after the remote process exits.
+
+## [2026-03-23] HTTP+SSE transport
+
+- The module declares Go 1.21, so HTTP transport registration must use classic `ServeMux` paths plus manual method/path checks instead of Go 1.22 route patterns and `PathValue`.
+- `EventBroker` should guard unsubscribe with a channel identity check so a stale unsubscribe cannot close a newer subscriber registered under the same session ID.
+- SSE endpoint tests are more reliable when they retry `Publish` until the subscriber is attached instead of assuming a fixed connect timing.
