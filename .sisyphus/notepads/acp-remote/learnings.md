@@ -31,3 +31,10 @@
 - openworkspace transport: pkg/acp/transport.go
 - openworkspace auth: pkg/http/auth.go
 - openworkspace K8s exec: pkg/kube/stream_exec.go
+
+## [2026-03-23] Proxy bridge implementation
+
+- Bridge local `Initialize` should negotiate/store protocol version, but backend `session/new` must always re-`Initialize` the spawned agent through `acp.ClientSideConnection` before forwarding session creation.
+- Bridge-to-agent client capabilities should stay minimal (`fs` disabled, `terminal` disabled) because non-forwarded client methods intentionally return `MethodNotFound`.
+- `Authenticate` has no session ID in ACP, so the bridge currently forwards it only when exactly one remote session is active; session-scoped methods (`Prompt`, `Cancel`, `SetSessionMode`) resolve by `sessionId`.
+- Session cleanup is safest when driven by the provider `Wait()` goroutine: remove the stored connection and close the session manager entry after the remote process exits.

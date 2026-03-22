@@ -21,3 +21,9 @@
 - NO TLS/mTLS/WebSocket/gRPC
 - NO data persistence (memory only)
 - NO agent reconnect/restart
+
+## [2026-03-23] Proxy bridge session routing
+
+- Keep backend process launch config on `proxy.Config` and use `NewSessionRequest.Cwd` as `ExecOptions.Dir` for spawned agents.
+- Track remote `ClientSideConnection` instances in a bridge-local `map[sessionId]*ClientSideConnection` and let session manager own process lifecycle metadata.
+- Stub unsupported client callbacks with `acp.NewMethodNotFound(...)` instead of adding partial filesystem/terminal implementations.

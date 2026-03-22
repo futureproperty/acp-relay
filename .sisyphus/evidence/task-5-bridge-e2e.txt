@@ -1,0 +1,32 @@
+=== RUN   TestBridgeEndToEnd
+=== PAUSE TestBridgeEndToEnd
+=== RUN   TestBridgeForwardsCallbacksAndMethods
+=== PAUSE TestBridgeForwardsCallbacksAndMethods
+=== RUN   TestBridgeClientMethodStubs
+=== PAUSE TestBridgeClientMethodStubs
+=== CONT  TestBridgeEndToEnd
+=== CONT  TestBridgeClientMethodStubs
+=== RUN   TestBridgeClientMethodStubs/ReadTextFile
+=== CONT  TestBridgeForwardsCallbacksAndMethods
+=== RUN   TestBridgeClientMethodStubs/WriteTextFile
+=== RUN   TestBridgeClientMethodStubs/CreateTerminal
+=== RUN   TestBridgeClientMethodStubs/KillTerminalCommand
+=== RUN   TestBridgeClientMethodStubs/TerminalOutput
+=== RUN   TestBridgeClientMethodStubs/ReleaseTerminal
+=== RUN   TestBridgeClientMethodStubs/WaitForTerminalExit
+--- PASS: TestBridgeClientMethodStubs (0.00s)
+    --- PASS: TestBridgeClientMethodStubs/ReadTextFile (0.00s)
+    --- PASS: TestBridgeClientMethodStubs/WriteTextFile (0.00s)
+    --- PASS: TestBridgeClientMethodStubs/CreateTerminal (0.00s)
+    --- PASS: TestBridgeClientMethodStubs/KillTerminalCommand (0.00s)
+    --- PASS: TestBridgeClientMethodStubs/TerminalOutput (0.00s)
+    --- PASS: TestBridgeClientMethodStubs/ReleaseTerminal (0.00s)
+    --- PASS: TestBridgeClientMethodStubs/WaitForTerminalExit (0.00s)
+2026/03/23 00:27:06 ERROR received message with neither id nor method raw="{\"jsonrpc\":\"2.0\",\"result\":{\"status\":\"cancelled\"}}"
+2026/03/23 00:27:06 INFO peer connection closed
+2026/03/23 00:27:06 INFO peer connection closed
+2026/03/23 00:27:06 INFO peer connection closed
+--- PASS: TestBridgeForwardsCallbacksAndMethods (0.01s)
+--- PASS: TestBridgeEndToEnd (0.02s)
+PASS
+ok  	github.com/yourorg/acp-remote/pkg/proxy	1.252s
