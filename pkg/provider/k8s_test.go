@@ -7,7 +7,7 @@ import (
 	"k8s.io/client-go/kubernetes/fake"
 	"k8s.io/client-go/rest"
 
-	"github.com/yourorg/acp-remote/pkg/provider"
+	"github.com/futureproperty/acp-relay/pkg/provider"
 )
 
 // TestK8sProviderConfig verifies K8sProvider can be created.

@@ -13,7 +13,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/yourorg/acp-remote/pkg/transport"
+	"github.com/futureproperty/acp-relay/pkg/transport"
 )
 
 type mockMsgHandler struct {

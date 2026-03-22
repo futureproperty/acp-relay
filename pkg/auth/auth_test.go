@@ -5,7 +5,7 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	"github.com/yourorg/acp-remote/pkg/auth"
+	"github.com/futureproperty/acp-relay/pkg/auth"
 )
 
 func okHandler() http.Handler {

@@ -6,8 +6,8 @@ import (
 
 	acp "github.com/coder/acp-go-sdk"
 
-	"github.com/yourorg/acp-remote/pkg/provider"
-	"github.com/yourorg/acp-remote/pkg/session"
+	"github.com/futureproperty/acp-relay/pkg/provider"
+	"github.com/futureproperty/acp-relay/pkg/session"
 )
 
 func (b *Bridge) Initialize(ctx context.Context, params acp.InitializeRequest) (acp.InitializeResponse, error) {
@@ -26,7 +26,7 @@ func (b *Bridge) Initialize(ctx context.Context, params acp.InitializeRequest) (
 		ProtocolVersion:   version,
 		AgentCapabilities: acp.AgentCapabilities{},
 		AgentInfo: &acp.Implementation{
-			Name:    "acp-remote",
+			Name:    "acp-relay",
 			Version: "dev",
 		},
 		AuthMethods: []acp.AuthMethod{},

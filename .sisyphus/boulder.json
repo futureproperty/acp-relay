@@ -2,7 +2,24 @@
   "active_plan": "/home/ubuntu/tmp/opencodeworkspace/acp-remote/.sisyphus/plans/acp-remote.md",
   "started_at": "2026-03-22T15:35:17.817Z",
   "session_ids": [
-    "ses_2e9d04dd4ffe3R9Q2G13c017KW"
+    "ses_2e9d04dd4ffe3R9Q2G13c017KW",
+    "ses_2e9b05108ffew3syd5zRJvbLZs",
+    "ses_2e9ab2fb8ffeWpjv62j0FsPG9G",
+    "ses_2e9a9c8ccffeQtSJ2V2sbSQFLb",
+    "ses_2e9a72787ffewfGBCrdQp3p2K8",
+    "ses_2e99e1d74ffebHKL3E2uUXqeYE",
+    "ses_2e999c6d9ffeQUlSx12s4OY594",
+    "ses_2e973d9b7ffeM5B0ENtAyl68l4",
+    "ses_2e968a211ffeabgWDNmu8CC2vQ",
+    "ses_2e9662ca6ffejWRRi8KAENjafx",
+    "ses_2e965fd7fffepODWqlbjfD2tuE",
+    "ses_2e96584a5ffemz1EEkodIf4b6a",
+    "ses_2e9656293ffegnSTa2XJzq5j5j",
+    "ses_2e9664707ffeLsfWQrcTeoA9lz",
+    "ses_2e965c626ffeXha4HN5o1F0GEt",
+    "ses_2e95fd39effeueQJ9IIZrc2QeU",
+    "ses_2e95e5510ffeEqMMzSXDKk8ebU",
+    "ses_2e95e00beffeI4kVGZtPPwCjgg"
   ],
   "plan_name": "acp-remote",
   "agent": "atlas"

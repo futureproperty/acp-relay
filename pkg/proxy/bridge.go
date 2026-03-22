@@ -7,8 +7,8 @@ import (
 
 	acp "github.com/coder/acp-go-sdk"
 
-	"github.com/yourorg/acp-remote/pkg/provider"
-	"github.com/yourorg/acp-remote/pkg/session"
+	"github.com/futureproperty/acp-relay/pkg/provider"
+	"github.com/futureproperty/acp-relay/pkg/session"
 )
 
 var (
@@ -68,7 +68,7 @@ func (b *Bridge) clientInitializeRequest() acp.InitializeRequest {
 			Terminal: false,
 		},
 		ClientInfo: &acp.Implementation{
-			Name:    "acp-remote",
+			Name:    "acp-relay",
 			Version: "dev",
 		},
 	}

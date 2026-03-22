@@ -1,4 +1,4 @@
-module github.com/yourorg/acp-remote
+module github.com/futureproperty/acp-relay
 
 go 1.25.0
 

@@ -6,7 +6,7 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	"github.com/yourorg/acp-remote/pkg/provider"
+	"github.com/futureproperty/acp-relay/pkg/provider"
 )
 
 // TestSandboxProviderConfig verifies SandboxProvider can be created.

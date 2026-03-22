@@ -11,7 +11,7 @@ import (
 	"runtime"
 	"testing"
 
-	"github.com/yourorg/acp-remote/pkg/provider"
+	"github.com/futureproperty/acp-relay/pkg/provider"
 )
 
 var mockAgentBin string

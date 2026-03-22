@@ -5,7 +5,7 @@ import (
 
 	dockerclient "github.com/docker/docker/client"
 
-	"github.com/yourorg/acp-remote/pkg/provider"
+	"github.com/futureproperty/acp-relay/pkg/provider"
 )
 
 // TestDockerProviderConfig verifies DockerProvider can be created with a pre-made client.

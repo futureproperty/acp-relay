@@ -236,7 +236,7 @@ Max Concurrent: 4 (Wave 1, Wave 3)
   - Files: `go.mod, go.sum, Makefile, pkg/*/doc.go, cmd/acp-remote/`
   - Pre-commit: `go vet ./...`
 
-- [ ] 2. ExecProvider Interface + Local Subprocess Provider
+- [x] 2. ExecProvider Interface + Local Subprocess Provider
 
   **What to do**:
   - 定义 `ExecProvider` 接口:
@@ -308,7 +308,7 @@ Max Concurrent: 4 (Wave 1, Wave 3)
   - Files: `pkg/provider/provider.go, pkg/provider/local.go, pkg/provider/*_test.go`
   - Pre-commit: `go test ./pkg/provider/... -race`
 
-- [ ] 3. Session Manager with State Machine
+- [x] 3. Session Manager with State Machine
 
   **What to do**:
   - 实现 `SessionManager`:
@@ -367,7 +367,7 @@ Max Concurrent: 4 (Wave 1, Wave 3)
   - Files: `pkg/session/manager.go, pkg/session/manager_test.go`
   - Pre-commit: `go test ./pkg/session/... -race`
 
-- [ ] 4. Bearer Token Auth Middleware
+- [x] 4. Bearer Token Auth Middleware
 
   **What to do**:
   - 实现 `AuthMiddleware(token string) func(http.Handler) http.Handler`
@@ -423,7 +423,7 @@ Max Concurrent: 4 (Wave 1, Wave 3)
 
 ---
 
-- [ ] 5. Bidirectional ACP Bridge Proxy
+- [x] 5. Bidirectional ACP Bridge Proxy
 
   **What to do**:
   - 实现 `Bridge` 结构体，它是 acp-remote 的核心:
@@ -503,7 +503,7 @@ Max Concurrent: 4 (Wave 1, Wave 3)
   - Files: `pkg/proxy/bridge.go, pkg/proxy/agent.go, pkg/proxy/client.go, pkg/proxy/*_test.go`
   - Pre-commit: `go test ./pkg/proxy/... -race`
 
-- [ ] 6. HTTP+SSE Transport Layer
+- [x] 6. HTTP+SSE Transport Layer
 
   **What to do**:
   - 实现 HTTP+SSE transport 将 HTTP 请求桥接到 Bridge:
@@ -571,7 +571,7 @@ Max Concurrent: 4 (Wave 1, Wave 3)
   - Files: `pkg/transport/http.go, pkg/transport/sse.go, pkg/transport/*_test.go`
   - Pre-commit: `go test ./pkg/transport/... -race`
 
-- [ ] 7. stdio Transport + CLI Subcommand
+- [x] 7. stdio Transport + CLI Subcommand
 
   **What to do**:
   - 实现 `stdio` 子命令:
@@ -635,7 +635,7 @@ Max Concurrent: 4 (Wave 1, Wave 3)
 
 ---
 
-- [ ] 8. Kubernetes Exec Provider
+- [x] 8. Kubernetes Exec Provider
 
   **What to do**:
   - 实现 `K8sProvider` implementing `ExecProvider`:
@@ -687,7 +687,7 @@ Max Concurrent: 4 (Wave 1, Wave 3)
   - Files: `pkg/provider/k8s.go, pkg/provider/k8s_test.go, pkg/provider/k8s_integration_test.go`
   - Pre-commit: `go test ./pkg/provider/... -race`
 
-- [ ] 9. Docker Exec Provider
+- [x] 9. Docker Exec Provider
 
   **What to do**:
   - 实现 `DockerProvider` implementing `ExecProvider`:
@@ -739,7 +739,7 @@ Max Concurrent: 4 (Wave 1, Wave 3)
   - Files: `pkg/provider/docker.go, pkg/provider/docker_test.go, pkg/provider/docker_integration_test.go`
   - Pre-commit: `go test ./pkg/provider/... -race`
 
-- [ ] 10. OpenSandbox Execd Provider
+- [x] 10. OpenSandbox Execd Provider
 
   **What to do**:
   - 实现 `SandboxProvider` implementing `ExecProvider`:
@@ -790,7 +790,7 @@ Max Concurrent: 4 (Wave 1, Wave 3)
   - Files: `pkg/provider/sandbox.go, pkg/provider/sandbox_test.go, pkg/provider/sandbox_integration_test.go`
   - Pre-commit: `go test ./pkg/provider/... -race`
 
-- [ ] 11. CLI Serve Subcommand + End-to-End Wiring
+- [x] 11. CLI Serve Subcommand + End-to-End Wiring
 
   **What to do**:
   - 实现 `serve` 子命令:
@@ -861,7 +861,7 @@ Max Concurrent: 4 (Wave 1, Wave 3)
   - Files: `cmd/acp-remote/serve.go, cmd/acp-remote/main.go`
   - Pre-commit: `go test ./... -race`
 
-- [ ] 12. README + Architecture Docs
+- [x] 12. README + Architecture Docs
 
   **What to do**:
   - 撰写 README.md:

@@ -15,9 +15,9 @@ import (
 
 	acp "github.com/coder/acp-go-sdk"
 
-	"github.com/yourorg/acp-remote/pkg/provider"
-	"github.com/yourorg/acp-remote/pkg/proxy"
-	"github.com/yourorg/acp-remote/pkg/session"
+	"github.com/futureproperty/acp-relay/pkg/provider"
+	"github.com/futureproperty/acp-relay/pkg/proxy"
+	"github.com/futureproperty/acp-relay/pkg/session"
 )
 
 var mockAgentBin string
@@ -72,7 +72,7 @@ func TestBridgeEndToEnd(t *testing.T) {
 	if initResp.ProtocolVersion != acp.ProtocolVersionNumber {
 		t.Fatalf("protocol version = %d, want %d", initResp.ProtocolVersion, acp.ProtocolVersionNumber)
 	}
-	if initResp.AgentInfo == nil || initResp.AgentInfo.Name != "acp-remote" {
+	if initResp.AgentInfo == nil || initResp.AgentInfo.Name != "acp-relay" {
 		t.Fatalf("unexpected agent info: %#v", initResp.AgentInfo)
 	}
 

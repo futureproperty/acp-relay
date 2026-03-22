@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"sync"
 
-	"github.com/yourorg/acp-remote/pkg/provider"
+	"github.com/futureproperty/acp-relay/pkg/provider"
 )
 
 // State represents the session lifecycle state.

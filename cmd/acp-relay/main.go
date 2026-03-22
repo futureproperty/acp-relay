@@ -1,4 +1,4 @@
-// Command acp-remote is a universal remote ACP proxy.
+// Command acp-relay is a universal remote ACP proxy.
 package main
 
 import (
@@ -8,7 +8,7 @@ import (
 
 func main() {
 	if len(os.Args) < 2 {
-		fmt.Fprintln(os.Stderr, "usage: acp-remote <command> [flags]")
+		fmt.Fprintln(os.Stderr, "usage: acp-relay <command> [flags]")
 		fmt.Fprintln(os.Stderr, "  stdio  --provider local --command <cmd>")
 		fmt.Fprintln(os.Stderr, "  serve  --listen <addr> --token <token>")
 		os.Exit(1)

@@ -1,10 +1,10 @@
-# acp-remote
+# acp-relay
 
 > Universal remote ACP proxy — connects ACP clients to agent processes running in K8s pods, Docker containers, OpenSandbox workspaces, or local subprocesses.
 
 ## Overview
 
-acp-remote implements the [Agent Client Protocol](https://agentclientprotocol.com) as a proxy bridge. It provides:
+acp-relay implements the [Agent Client Protocol](https://agentclientprotocol.com) as a proxy bridge. It provides:
 - **stdio mode**: transparent ACP agent (use in pipes or as process bridge)
 - **serve mode**: HTTP+SSE server accepting ACP requests and forwarding to backend agents
 
@@ -18,7 +18,7 @@ Client (IDE/CLI/OpenClaw)
     │ JSON-RPC over stdio (stdio mode)
     ▼
 ┌─────────────────────────┐
-│      acp-remote         │
+│      acp-relay          │
 │  ┌──────────────────┐   │
 │  │  ACP Bridge      │   │  implements acp.Agent + acp.Client
 │  └────────┬─────────┘   │
@@ -36,25 +36,25 @@ Client (IDE/CLI/OpenClaw)
 
 ```bash
 # Install binary
-go install github.com/yourorg/acp-remote/cmd/acp-remote@latest
+go install github.com/futureproperty/acp-relay/cmd/acp-relay@latest
 
 # Or use as a library
-go get github.com/yourorg/acp-remote
+go get github.com/futureproperty/acp-relay
 ```
 
 ## Quick Start
 
 ### stdio Mode
 
-Run acp-remote as a transparent ACP agent that forwards to a local backend:
+Run acp-relay as a transparent ACP agent that forwards to a local backend:
 
 ```bash
 # Forward to a local agent binary
-acp-remote stdio --provider local --command ./my-agent
+acp-relay stdio --provider local --command ./my-agent
 
 # Example: pipe an initialize request
 echo '{"jsonrpc":"2.0","id":1,"method":"initialize","params":{"protocolVersion":1,"clientCapabilities":{}}}' \
-  | acp-remote stdio --provider local --command ./my-agent
+  | acp-relay stdio --provider local --command ./my-agent
 ```
 
 ### serve Mode
@@ -62,7 +62,7 @@ echo '{"jsonrpc":"2.0","id":1,"method":"initialize","params":{"protocolVersion":
 Start an HTTP+SSE ACP server:
 
 ```bash
-acp-remote serve \
+acp-relay serve \
   --listen :8080 \
   --token my-secret-token \
   --default-provider local \
@@ -103,17 +103,17 @@ p := provider.NewSandboxProvider(provider.SandboxOptions{
 
 ### OpenClaw Example
 
-OpenClaw already speaks ACP natively. Use acp-remote in stdio mode as a bridge:
+OpenClaw already speaks ACP natively. Use acp-relay in stdio mode as a bridge:
 
 ```bash
-acp-remote stdio --provider local --command openclaw
+acp-relay stdio --provider local --command openclaw
 ```
 
 ## ACP Method Support Matrix
 
 | Method | Direction | Status |
 |--------|-----------|--------|
-| `initialize` | client→agent | ✅ Handled locally by acp-remote |
+| `initialize` | client→agent | ✅ Handled locally by acp-relay |
 | `session/new` | client→agent | ✅ Starts backend agent process |
 | `session/prompt` | client→agent | ✅ Forwarded to backend |
 | `session/cancel` | client→agent | ✅ Forwarded to backend |

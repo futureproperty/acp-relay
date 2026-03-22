@@ -18,11 +18,11 @@ import (
 
 	acp "github.com/coder/acp-go-sdk"
 
-	"github.com/yourorg/acp-remote/pkg/auth"
-	"github.com/yourorg/acp-remote/pkg/provider"
-	"github.com/yourorg/acp-remote/pkg/proxy"
-	"github.com/yourorg/acp-remote/pkg/session"
-	"github.com/yourorg/acp-remote/pkg/transport"
+	"github.com/futureproperty/acp-relay/pkg/auth"
+	"github.com/futureproperty/acp-relay/pkg/provider"
+	"github.com/futureproperty/acp-relay/pkg/proxy"
+	"github.com/futureproperty/acp-relay/pkg/session"
+	"github.com/futureproperty/acp-relay/pkg/transport"
 )
 
 const bridgeMessageScannerMaxSize = 10 * 1024 * 1024
@@ -83,7 +83,7 @@ func runServe(args []string) error {
 
 	errCh := make(chan error, 1)
 	go func() {
-		fmt.Fprintf(os.Stderr, "acp-remote serve listening on %s\n", *listen)
+		fmt.Fprintf(os.Stderr, "acp-relay serve listening on %s\n", *listen)
 		if err := srv.ListenAndServe(); err != nil && !errors.Is(err, http.ErrServerClosed) {
 			errCh <- err
 		}

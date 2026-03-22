@@ -5,7 +5,7 @@ import (
 	"sync"
 	"testing"
 
-	"github.com/yourorg/acp-remote/pkg/session"
+	"github.com/futureproperty/acp-relay/pkg/session"
 )
 
 func TestSessionCreate(t *testing.T) {
