@@ -1,0 +1,54 @@
+ACP-REMOTE MANUAL QA RESULTS
+=============================
+
+Setup: PASS
+- go build -o bin/acp-remote ./cmd/acp-remote/ ✓
+- go build -o bin/mock-agent ./testdata/mock_agent/ ✓
+
+Scenario 1 (stdio initialize): PASS
+Command: (echo '{"jsonrpc":"2.0","id":1,"method":"initialize","params":{"protocolVersion":1,"clientCapabilities":{}}}'; sleep 0.5) | timeout 5 ./bin/acp-remote stdio --provider local --command ./bin/mock-agent
+Result: {"jsonrpc":"2.0","id":1,"result":{"agentCapabilities":{"mcpCapabilities":{},"promptCapabilities":{}},"agentInfo":{"name":"acp-remote","version":"dev"},"authMethods":[],"protocolVersion":1}}
+Verification: Contains "protocolVersion":1 ✓
+
+Scenario 2 (HTTP serve + initialize): PASS
+Command: ./bin/acp-remote serve --listen :19083 --token test-secret --default-provider local --default-command ./bin/mock-agent
+curl with Authorization Bearer token and initialize request
+Result: {"jsonrpc":"2.0","id":1,"result":{"agentCapabilities":{"mcpCapabilities":{},"promptCapabilities":{}},"agentInfo":{"name":"acp-remote","version":"dev"},"authMethods":[],"protocolVersion":1}}
+HTTP Status: 200
+Verification: JSON response with "protocolVersion":1 ✓
+
+Scenario 3 (Auth rejection 401): PASS
+Command: ./bin/acp-remote serve --listen :19084 --token test-secret --default-provider local --default-command ./bin/mock-agent
+curl without Authorization header
+HTTP Code: 401
+Verification: HTTP 401 returned as expected ✓
+
+Scenario 4 (all tests pass): PASS
+Command: go test ./... -race -count=1
+Results:
+  ? github.com/yourorg/acp-remote/cmd/acp-remote [no test files]
+  ok github.com/yourorg/acp-remote/pkg/auth 1.014s
+  ok github.com/yourorg/acp-remote/pkg/provider 1.212s
+  ok github.com/yourorg/acp-remote/pkg/proxy 1.220s
+  ok github.com/yourorg/acp-remote/pkg/session 1.050s
+  ok github.com/yourorg/acp-remote/pkg/transport 1.070s
+Total: 5/5 pass
+Verification: All packages pass with race detector ✓
+
+SUMMARY
+=======
+Setup: PASS
+Scenario 1 (stdio initialize): PASS
+Scenario 2 (HTTP serve): PASS
+Scenario 3 (Auth 401): PASS
+Scenario 4 (all tests): 5/5 pass
+
+Scenarios: 4/4 pass
+
+VERDICT: APPROVE
+
+All QA scenarios passed successfully. The acp-remote binary correctly:
+- Initializes via stdio transport
+- Serves HTTP endpoints with proper authentication
+- Rejects unauthenticated requests with 401
+- Passes comprehensive test suite with race detection
