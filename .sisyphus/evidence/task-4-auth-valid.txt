@@ -1,0 +1,12 @@
+=== RUN   TestAuthValid
+--- PASS: TestAuthValid (0.00s)
+=== RUN   TestAuthInvalid
+--- PASS: TestAuthInvalid (0.00s)
+=== RUN   TestAuthMissing
+--- PASS: TestAuthMissing (0.00s)
+=== RUN   TestAuthEmptyTokenSkips
+--- PASS: TestAuthEmptyTokenSkips (0.00s)
+=== RUN   TestAuthWrongScheme
+--- PASS: TestAuthWrongScheme (0.00s)
+PASS
+ok  	github.com/yourorg/acp-remote/pkg/auth	1.013s
