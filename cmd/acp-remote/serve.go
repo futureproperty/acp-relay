@@ -139,9 +139,9 @@ func (h *bridgeMessageHandler) Close() error {
 }
 
 func (h *bridgeMessageHandler) ServeMessage(req []byte) ([]byte, error) {
-	env, err := parseRPCEnvelope(req)
+	hint, err := parsePipeRoutingHint(req)
 	if err != nil {
-		return jsonRPCParseError(), nil
+		return pipeParseErrorResponse(), nil
 	}
 
 	h.mu.Lock()
@@ -150,16 +150,16 @@ func (h *bridgeMessageHandler) ServeMessage(req []byte) ([]byte, error) {
 	if _, err := h.requestW.Write(append(append([]byte(nil), req...), '\n')); err != nil {
 		return nil, fmt.Errorf("write request: %w", err)
 	}
-	if env.ID == nil {
+	if hint.ID == nil {
 		return []byte{}, nil
 	}
 
 	for h.responseScanner.Scan() {
 		line := append([]byte(nil), h.responseScanner.Bytes()...)
-		switch classifyJSONRPCMessage(line) {
-		case jsonRPCResponse:
+		switch classifyPipeMessage(line) {
+		case pipeMessageResponse:
 			return line, nil
-		case jsonRPCNotification:
+		case pipeMessageNotification:
 			h.forwardNotification(line)
 		}
 	}
@@ -170,48 +170,54 @@ func (h *bridgeMessageHandler) ServeMessage(req []byte) ([]byte, error) {
 	return nil, fmt.Errorf("read response: connection closed")
 }
 
-type jsonRPCMessageType int
+type pipeMessageType int
 
 const (
-	jsonRPCUnknown jsonRPCMessageType = iota
-	jsonRPCResponse
-	jsonRPCNotification
+	pipeMessageUnknown pipeMessageType = iota
+	pipeMessageResponse
+	pipeMessageNotification
 )
 
-type jsonRPCEnvelope struct {
+type pipeRoutingHint struct {
 	ID     *json.RawMessage `json:"id"`
 	Method string           `json:"method"`
 	Params json.RawMessage  `json:"params"`
 }
 
-func parseRPCEnvelope(raw []byte) (jsonRPCEnvelope, error) {
-	var env jsonRPCEnvelope
-	err := json.Unmarshal(raw, &env)
-	return env, err
+// parsePipeRoutingHint peeks at id/method to classify SDK output from the pipe.
+// This is NOT a JSON-RPC implementation — the SDK handles all protocol logic.
+// We only need to distinguish responses (have id) from notifications (have method).
+func parsePipeRoutingHint(raw []byte) (pipeRoutingHint, error) {
+	var hint pipeRoutingHint
+	err := json.Unmarshal(raw, &hint)
+	return hint, err
 }
 
-func classifyJSONRPCMessage(raw []byte) jsonRPCMessageType {
-	env, err := parseRPCEnvelope(raw)
+// classifyPipeMessage peeks at id/method to classify SDK output from the pipe.
+// This is NOT a JSON-RPC implementation — the SDK handles all protocol logic.
+// We only need to distinguish responses (have id) from notifications (have method).
+func classifyPipeMessage(raw []byte) pipeMessageType {
+	hint, err := parsePipeRoutingHint(raw)
 	if err != nil {
-		return jsonRPCUnknown
+		return pipeMessageUnknown
 	}
-	if env.ID != nil && env.Method == "" {
-		return jsonRPCResponse
+	if hint.ID != nil && hint.Method == "" {
+		return pipeMessageResponse
 	}
-	if env.ID == nil && env.Method != "" {
-		return jsonRPCNotification
+	if hint.ID == nil && hint.Method != "" {
+		return pipeMessageNotification
 	}
-	return jsonRPCUnknown
+	return pipeMessageUnknown
 }
 
 func (h *bridgeMessageHandler) forwardNotification(raw []byte) {
-	env, err := parseRPCEnvelope(raw)
-	if err != nil || env.Method != acp.ClientMethodSessionUpdate || h.broker == nil {
+	hint, err := parsePipeRoutingHint(raw)
+	if err != nil || hint.Method != acp.ClientMethodSessionUpdate || h.broker == nil {
 		return
 	}
 
 	var notification acp.SessionNotification
-	if err := json.Unmarshal(env.Params, &notification); err != nil {
+	if err := json.Unmarshal(hint.Params, &notification); err != nil {
 		return
 	}
 
@@ -221,7 +227,9 @@ func (h *bridgeMessageHandler) forwardNotification(raw []byte) {
 	})
 }
 
-func jsonRPCParseError() []byte {
+// pipeParseErrorResponse returns a JSON-RPC parse error response.
+// This is returned when we cannot parse the incoming message.
+func pipeParseErrorResponse() []byte {
 	return []byte(`{"jsonrpc":"2.0","id":null,"error":{"code":-32700,"message":"Parse error"}}`)
 }
 
