@@ -103,11 +103,31 @@ p := provider.NewSandboxProvider(provider.SandboxOptions{
 
 ### OpenClaw Example
 
-OpenClaw already speaks ACP natively. Use acp-relay in stdio mode as a bridge:
+OpenClaw uses acp-relay to spawn sessions on remote code agents (e.g. Claude Code, OpenCode).
+Run acp-relay in serve mode as the bridge between OpenClaw and the backend agent:
 
 ```bash
-acp-relay stdio --provider local --command openclaw
+# Start acp-relay pointing at a code agent (e.g. claude, opencode)
+acp-relay serve \
+  --listen :8080 \
+  --token my-secret-token \
+  --default-provider local \
+  --default-command claude
 ```
+
+Then configure OpenClaw to connect to it as an ACP endpoint:
+
+```yaml
+# openclaw config
+agents:
+  - name: claude-remote
+    endpoint: http://acp-relay-host:8080
+    token: my-secret-token
+```
+
+When OpenClaw sends `session/new`, acp-relay spawns the agent process and relays all
+ACP messages (`session/prompt`, `session/update`, `session/request_permission`, etc.)
+bidirectionally between OpenClaw and the code agent.
 
 ## ACP Method Support Matrix
 
