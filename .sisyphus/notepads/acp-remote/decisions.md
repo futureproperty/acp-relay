@@ -33,3 +33,9 @@
 - Keep transport on plain HTTP + SSE only; do not add WebSocket, TLS, or CORS behavior in this package.
 - Use a single session route prefix (`/acp/sessions/`) with manual path splitting so approve/deny stay compatible with Go 1.21 `http.ServeMux`.
 - Keep HTTP request handling pluggable through `MessageHandler`/`PermissionHandler`, and serialize bridge-backed JSON-RPC requests with `PipeMessageHandler` mutex protection.
+
+## [2026-03-23] Serve command implementation
+
+- Implement `cmd/acp-remote/serve.go` as a thin composition layer: local provider + bridge + SSE broker + HTTP transport + auth middleware + graceful shutdown.
+- Keep HTTP permission endpoints registered but use an internal no-op `PermissionHandler` for now because serve mode intentionally auto-approves permission requests instead of building interactive approval state.
+- Return JSON-RPC parse errors from the bridge-backed message handler instead of hanging when invalid JSON reaches the persistent ACP pipe.

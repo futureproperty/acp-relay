@@ -44,3 +44,9 @@
 - The module declares Go 1.21, so HTTP transport registration must use classic `ServeMux` paths plus manual method/path checks instead of Go 1.22 route patterns and `PathValue`.
 - `EventBroker` should guard unsubscribe with a channel identity check so a stale unsubscribe cannot close a newer subscriber registered under the same session ID.
 - SSE endpoint tests are more reliable when they retry `Publish` until the subscriber is attached instead of assuming a fixed connect timing.
+
+## [2026-03-23] Serve subcommand wiring
+
+- `serve` can reuse one long-lived `acp.AgentSideConnection` behind `io.Pipe` pairs so HTTP JSON-RPC requests hit the same bridge instance and preserve ACP session state across calls.
+- In HTTP mode, bridge `SessionUpdate` callbacks should publish directly to `transport.EventBroker` instead of writing back through the request-response pipe; otherwise async notifications can race with synchronous HTTP responses.
+- Auto-approving permissions is simplest by selecting the first allow-like ACP option (`allow_once`/`allow_always`) and falling back to the first provided option.
