@@ -1,0 +1,18 @@
+=== RUN   TestSessionCreate
+--- PASS: TestSessionCreate (0.00s)
+=== RUN   TestSessionDuplicateCreate
+--- PASS: TestSessionDuplicateCreate (0.00s)
+=== RUN   TestSessionNotFound
+--- PASS: TestSessionNotFound (0.00s)
+=== RUN   TestSessionLifecycle
+--- PASS: TestSessionLifecycle (0.00s)
+=== RUN   TestSessionInvalidTransition
+--- PASS: TestSessionInvalidTransition (0.00s)
+=== RUN   TestSessionClose
+--- PASS: TestSessionClose (0.00s)
+=== RUN   TestSessionList
+--- PASS: TestSessionList (0.00s)
+=== RUN   TestSessionConcurrent
+--- PASS: TestSessionConcurrent (0.00s)
+PASS
+ok  	github.com/yourorg/acp-remote/pkg/session	1.016s
