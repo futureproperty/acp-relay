@@ -1,0 +1,10 @@
+=== RUN   TestLocalProviderStdinStdout
+--- PASS: TestLocalProviderStdinStdout (0.00s)
+=== RUN   TestLocalProviderContextCancel
+--- PASS: TestLocalProviderContextCancel (0.00s)
+=== RUN   TestLocalProviderExitDetection
+--- PASS: TestLocalProviderExitDetection (0.00s)
+=== RUN   TestLocalProviderEmptyCommand
+--- PASS: TestLocalProviderEmptyCommand (0.00s)
+PASS
+ok  	github.com/yourorg/acp-remote/pkg/provider	1.392s
