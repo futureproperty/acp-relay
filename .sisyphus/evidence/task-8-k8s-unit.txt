@@ -1,0 +1,18 @@
+=== RUN   TestK8sProviderConfig
+--- PASS: TestK8sProviderConfig (0.00s)
+=== RUN   TestK8sProviderEmptyCommand
+--- PASS: TestK8sProviderEmptyCommand (0.00s)
+=== RUN   TestK8sProviderImplementsInterface
+    k8s_test.go:40: K8sProvider implements ExecProvider
+--- PASS: TestK8sProviderImplementsInterface (0.00s)
+PASS
+ok  	github.com/yourorg/acp-remote/pkg/provider	1.237s
+=== RUN   TestK8sProviderConfig
+--- PASS: TestK8sProviderConfig (0.00s)
+=== RUN   TestK8sProviderEmptyCommand
+--- PASS: TestK8sProviderEmptyCommand (0.00s)
+=== RUN   TestK8sProviderImplementsInterface
+    k8s_test.go:40: K8sProvider implements ExecProvider
+--- PASS: TestK8sProviderImplementsInterface (0.00s)
+PASS
+ok  	github.com/yourorg/acp-remote/pkg/provider	1.223s

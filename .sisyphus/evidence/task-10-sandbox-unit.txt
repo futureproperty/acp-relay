@@ -1,0 +1,12 @@
+=== RUN   TestSandboxProviderConfig
+--- PASS: TestSandboxProviderConfig (0.00s)
+=== RUN   TestSandboxProviderImplementsInterface
+    sandbox_test.go:26: SandboxProvider implements ExecProvider
+--- PASS: TestSandboxProviderImplementsInterface (0.00s)
+=== RUN   TestSandboxProviderEmptyCommand
+--- PASS: TestSandboxProviderEmptyCommand (0.00s)
+=== RUN   TestSandboxProviderHTTPExec
+    sandbox_test.go:75: Method: POST, Path: /command
+--- PASS: TestSandboxProviderHTTPExec (0.00s)
+PASS
+ok  	github.com/yourorg/acp-remote/pkg/provider	1.223s
