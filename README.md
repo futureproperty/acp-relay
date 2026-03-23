@@ -101,34 +101,86 @@ p := provider.NewSandboxProvider(provider.SandboxOptions{
 })
 ```
 
-### OpenClaw Example
+### OpenClaw Integration (via acpx + stdio)
 
-OpenClaw uses acp-relay to spawn sessions on remote code agents (e.g. Claude Code, OpenCode).
-Run acp-relay in serve mode as the bridge between OpenClaw and the backend agent:
+OpenClaw has a built-in ACP runtime powered by the [acpx](https://github.com/openclaw/openclaw/tree/main/extensions/acpx) plugin.
+The easiest way to connect OpenClaw to acp-relay is over **stdio** — OpenClaw spawns `acp-relay` as a child process and they speak ACP JSON-RPC over stdin/stdout. What acp-relay does downstream (local, K8s, Docker, sandbox) is completely transparent to OpenClaw.
+
+```
+OpenClaw Gateway
+    │ sessions_spawn(runtime="acp")
+    ▼
+  acpx plugin
+    │ spawns child process (stdio)
+    ▼
+  acp-relay stdio --provider <type> --command <agent>
+    │ JSON-RPC over stdio
+    ▼
+  Agent process (local / K8s pod / Docker / sandbox)
+```
+
+#### Step 1 — Install acp-relay
 
 ```bash
-# Start acp-relay pointing at a code agent (e.g. claude, opencode)
-acp-relay serve \
-  --listen :8080 \
-  --token my-secret-token \
-  --default-provider local \
-  --default-command claude
+go install github.com/futureproperty/acp-relay/cmd/acp-relay@latest
 ```
 
-Then configure OpenClaw to connect to it as an ACP endpoint:
+#### Step 2 — Configure OpenClaw
 
-```yaml
-# openclaw config
-agents:
-  - name: claude-remote
-    endpoint: http://acp-relay-host:8080
-    token: my-secret-token
+Set the acpx plugin to use acp-relay as the agent command:
+
+```bash
+# Point acpx at acp-relay (stdio mode, K8s provider example)
+openclaw config set plugins.entries.acpx.config.command \
+  "acp-relay stdio --provider k8s --namespace agents --pod codex-agent-0 --command claude"
+
+# Or for local provider
+openclaw config set plugins.entries.acpx.config.command \
+  "acp-relay stdio --provider local --command claude"
 ```
 
-When OpenClaw sends `session/new`, acp-relay spawns the agent process and relays all
-ACP messages (`session/prompt`, `session/update`, `session/request_permission`, etc.)
-bidirectionally between OpenClaw and the code agent.
+Or in `~/.openclaw/openclaw.json`:
 
+```json5
+{
+  acp: {
+    enabled: true,
+    backend: "acpx",
+    defaultAgent: "codex",
+  },
+  plugins: {
+    entries: {
+      acpx: {
+        enabled: true,
+        config: {
+          command: "acp-relay stdio --provider k8s --namespace agents --pod codex-agent-0 --command claude",
+          expectedVersion: "any",
+          permissionMode: "approve-all",
+        },
+      },
+    },
+  },
+}
+```
+
+#### Step 3 — Spawn a session
+
+From chat:
+```text
+/acp spawn codex --mode persistent --thread auto
+```
+
+From an agent tool call:
+```json
+{
+  "task": "Summarize failing tests in this repo",
+  "runtime": "acp",
+  "agentId": "codex",
+  "mode": "run"
+}
+```
+
+OpenClaw spawns `acp-relay stdio ...` as a child process, sends `initialize` → `session/new` → `session/prompt` over stdin, and reads `session/update` events from stdout. The relay handles all downstream connectivity.
 ## ACP Method Support Matrix
 
 | Method | Direction | Status |
